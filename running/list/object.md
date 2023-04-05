@@ -187,3 +187,48 @@ Uncaught TypeError: present_bag.blue_house_risa is not a function
 }
 ```
 - 메소드도 `키: 벨류` 형식이며 벨류에 함수를 할당한 꼴이다. 따라서 `키: 벨류` 쌍들 사이에 콤마를 넣는 것은 똑같다.
+
+### 속성 변화
+- 크기를 늘리는 주문을 들었을 때 자루의 `width` 속성과 `height` 속성은 늘어난다.
+- 크기를 줄이는 주문을 들었을 때 자루의 `width` 속성과 `height` 속성은 줄어든다.
+- 위 로직은 `inflate` 메소드를 실행했을 때 `width`값과 `height`값을 늘리고 줄이는 것으로 만들 수 있다.
+```js
+const present_bag = {
+  width : 100,
+  height : 100,
+  inflate : function () {
+    this.width = this.width + 10;
+    this.height = this.height + 10;
+  },
+  reduce : function () {
+    this.width = this.width - 10;
+    this.height = this.height - 10;
+  }
+}
+```
+- 브라우저의 콘솔 창에서 위의 코드를 입력 한 후에 `inflate()` 메소드를 실행 시켜 보자.
+```js
+present_bag.inflate()
+```
+- 그리고 `width` 및 `height` 속성이 어떻게 변했는지 보면
+```js
+present_bag.width
+```
+```js
+present_bag.height
+```
+- 값은 100이 아니라 110이 되었다는 것을 알 수 있다.
+```js
+present_bag.reduce()
+present_bag.reduce()
+present_bag.reduce()
+```
+- 이번에는 자루의 사이즈를 줄이는 메소드를 실행 해 보자. 3번 실행하면
+```js
+present_bag.width
+```
+```js
+present_bag.height
+```
+- 위 값은 110에서 -10, -10, -10을 하여 80이 된 것을 확인할 수 있다.
+- 위와 같이 메소드의 특징은 오브젝트의 속성값을 변경할 수 있다는 것이다.
