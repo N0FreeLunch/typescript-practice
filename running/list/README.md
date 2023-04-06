@@ -6,3 +6,4 @@
 5. [타입이란 무엇인가?](type.md)
 6. [오브젝트](object.md)
 7. [타입추론](typeInference.md)
+8. [할당가능성](assignability.md)
