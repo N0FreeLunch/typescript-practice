@@ -7,3 +7,4 @@
 6. [오브젝트](object.md)
 7. [타입추론](typeInference.md)
 8. [할당가능성](assignability.md)
+9. [변수초기화](variableInitialization.md)
