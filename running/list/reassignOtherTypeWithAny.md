@@ -28,6 +28,9 @@ rocker.toPrecision(1);
 
 rocker.toUpperCase();
 ```
+- 위의 코드를 codes 폴더의 `reassignOtherTypeWithAny.ts` 파일을 만들어서 보면 마지막 줄의 `rocker.toUpperCase();` 부분의 `toUpperCase`에서 에러가 발생한다.
+
+#### 코드 해석
 - `let rocker` 변수를 선언할 때 변수에 아무런 값도 할당하지 않았기 때문에 이 변수는 any 타입이 된다.
 - 변수에 `Joan Jett`란 값을 대입하였기 때문에 문자열 타입이 되었다. 하지만 이 변수는 처음에 any 타입이기 때문에 문자열 타입이 되었지만, 다른 타입으로 바꿀 수 있다.
 - 문자열 타입의 변수 `rocker`에 `.`을 써 주면 문자열 오브젝트로 변하게 된다. `rocker.`는 문자열 오브젝트이고 문자열 오브젝트는 문자열을 다룰 때 필요한 다양한 기능을 가지고 있다. 문자열 오브젝트의 `toUpperCase()` 메소드는 문자열의 값이 소문자라면 대문자로 바꿔주는 기능이다. 따라서 `rocker.toUpperCase()`의 결과는 `'JOAN JETT'`가 된다.
