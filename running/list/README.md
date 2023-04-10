@@ -8,3 +8,4 @@
 7. [타입추론](typeInference.md)
 8. [할당가능성](assignability.md)
 9. [any를 활용한 타입 재할당](reassignOtherTypeWithAny.md)
+10. [타입 애노테이션](typeAnnotation.md)
