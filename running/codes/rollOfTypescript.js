@@ -2,7 +2,7 @@ var animal = {
     cat: Symbol('고양이'),
     mouse: '쥐'
 };
-var mouseHole;
-mouseHole = animal.mouse;
+var wallWithMouseHole;
+wallWithMouseHole = animal.mouse;
 var backyard;
-backyard = mouseHole;
+backyard = wallWithMouseHole;
