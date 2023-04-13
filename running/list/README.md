@@ -11,3 +11,4 @@
 10. [타입 애노테이션](typeAnnotation.md)
 11. [타입스크립트의 역할](rollOfTypeScript.md)
 12. [모듈을 사용해야 하는 이유](whyUseModule.md)
+13. [스코프](scope.md)
