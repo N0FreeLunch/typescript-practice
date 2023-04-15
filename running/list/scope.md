@@ -74,4 +74,77 @@ console.log('innerVariable', innerVariable);
 
 ### 전역변수와 지역변수
 - 전역변수란 글로벌 스코프와 생명주기를 같이하는 변수를 의미한다.
-- 지역변수란 const나 let의 경우 블록을 스코프로 한 변수이며, var의 경우는 함수나 모듈을 스코프로 한 변수이다.
+- 지역변수란 const나 let의 경우 블록을 스코프로 한 변수이며, var의 경우는 함수나 모듈을 스코프로 한 변수이다. 이들 스코프 내에서 생성된 변수는 스코프의 종료 되면 없어진다.
+
+
+## 상위 스코프와 하위 스코프
+- 상위 스코프는 좀 더 바깥 쪽에 위치한 스코프이며, 하위 스코프는 좀 더 안쪽에 위치한 스코프이다.
+- 상위 스코프에서 선언된 변수는 하위 스코프에 전달되며, 하위 스코프에서 선언된 변수는 상위 스코프에 전달되지 않는다.
+```js
+var outerVariable = 10;
+const functionScope = function () {
+  var innerVariable = 20;
+  const functionNestedScope = function () {
+    var nestedVariable = 30;
+    console.log('innerVariable in nested function : ', innerVariable);
+    console.log('nestedVariable in nested function : ', nestedVariable);
+  };
+  functionNestedScope();
+  console.log('innerVariable in function : ', innerVariable);
+  console.log('nestedVariable in function : ', nestedVariable);
+};
+functionScope();
+console.log('outerVariable', outerVariable);
+console.log('innerVariable out of function', innerVariable);
+```
+- 위의 코드를 브라우저의 자바스크립트 콘솔창에서 실행해 보면 다음과 같은 결과가 나온다.
+```
+innerVariable in nested function :  20
+nestedVariable in nested function :  30
+innerVariable in function :  20
+```
+- 또한 다음과 같은 에러 메시지가 나온다.
+```
+Uncaught ReferenceError: nestedVariable is not defined
+    at functionScope (<anonymous>:11:48)
+```
+- 스코프 안에 스코프가 있는 것을 중첩된(nested) 스코프라고 부른다.
+- `innerVariable in nested function :  20`라는 것은 중첨된 스코프 안에서 외부 스코프에 있던 `innerVariable`라는 변수를 중첩된 스코프 안에서도 사용할 수 있다는 것을 확인할 수 있다.
+- 하지만 `console.log('nestedVariable in function : ', nestedVariable);` 부분에서 `nestedVariable` 변수는 `is not defined`라고 에러가 났는데, 변수가 선언된 함수 스코프 내부가 아닌 외부에서 해당 변수를 사용했기 때문이다.
+
+
+## 스코프를 범위에서 변수 덮어쓰기
+### 재할당 불가능한 변수 선언 let
+```js
+let letVariable = 10;
+let letVariable = 20;
+console.log('letVariable', letVariable);
+```
+- 위 코드를 실행하면 다음과 같은 에러 메시지가 나온다.
+```
+Uncaught SyntaxError: Identifier 'letVariable' has already been declared
+```
+- let으로 선언한 변수는 변수 내의 값을 바꿀 수는 있어도 다시 선언할 수는 없다.
+- var로 선언한 변수 명과 같은 변수명을 한 참 뒤의 코드에서 다시 선언하는 겨우를 생각 해 보자. var를 사용하면 이미 선언된 값을 변경할 수 있기 때문에 오랜 시간 뒤에 코드를 추가로 짜거나 변경할 때 똑 같은 변수명을 사용하는 경우가 생길 수 있다. 이 때 예전에 짠 코드는 예기치 않는 변수의 변경으로 잘못된 로직으로 동작하게 될 가능성이 높아진다. 따라서 처음 사용한 변수가 나중에 추가된 변수에 의해 변경이 되지 않도록 하기 위해서 변수가 중복으로 선언되는 것을 방지하는 변수 선언 방식이 let을 사용한 변수 선언 방식이다. 그래서 자바스크립트 프로그래밍에서는 이러한 실수를 최대한 방지하기 위해 var를 쓰지 말고 let을 사용하는 것을 권장한다.
+- 위 코드와 같이 동일한 변수명을 let으로 다시 선언하게 되면 중복으로 선언할 수 없다는 에러 메시지가 나온다.
+
+### 스코프를 사용한 변수 재할당
+- let을 사용한 변수 선언은 재선언이 불가능하지만, 하위 스코프에서는 재선언이 가능하다.
+```js
+let outerVariable = 10;
+if(true) {
+  let innerVariable = 20;
+  let outerVariable = 30;
+  console.log('outerVariable in inner scope', outerVariable);
+  console.log('innerVariable in inner scope', innerVariable);
+}
+console.log('outerVariable in outer scope', outerVariable);
+```
+- 위 코드를 브라우저의 콘솔 창에 실행 해 보면, 그 결과는 다음과 같다.
+```
+outerVariable in inner scope 30
+innerVariable in inner scope 20
+outerVariable in outer scope 10
+```
+- 위 코드에서 스코프 내에서 외부 스코프의 변수 `outerVariable`를 재선언을 했지만 에러를 발생시키지 않는다.
+- 스코프 내부에서 `innerVariable` 변수를 재선언 했지만 스코프 외부에서는 스코프 내부에서 재선언된 변수의 영향을 받지는 않는 것을 `console.log('outerVariable in outer scope', outerVariable);` 부분의 결과가 `outerVariable in outer scope 10`인 것을 통해서 알 수 있다. 스코프 내부에서는 값을 30으로 바꾸었지만, 여전히 값은 10으로 외부 스코프의 변수에 영향을 주지 않을 것을 알 수있다.
