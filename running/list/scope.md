@@ -76,7 +76,6 @@ console.log('innerVariable', innerVariable);
 - 전역변수란 글로벌 스코프와 생명주기를 같이하는 변수를 의미한다.
 - 지역변수란 const나 let의 경우 블록을 스코프로 한 변수이며, var의 경우는 함수나 모듈을 스코프로 한 변수이다. 이들 스코프 내에서 생성된 변수는 스코프의 종료 되면 없어진다.
 
-
 ## 상위 스코프와 하위 스코프
 - 상위 스코프는 좀 더 바깥 쪽에 위치한 스코프이며, 하위 스코프는 좀 더 안쪽에 위치한 스코프이다.
 - 상위 스코프에서 선언된 변수는 하위 스코프에 전달되며, 하위 스코프에서 선언된 변수는 상위 스코프에 전달되지 않는다.
@@ -111,7 +110,6 @@ Uncaught ReferenceError: nestedVariable is not defined
 - 스코프 안에 스코프가 있는 것을 중첩된(nested) 스코프라고 부른다.
 - `innerVariable in nested function :  20`라는 것은 중첨된 스코프 안에서 외부 스코프에 있던 `innerVariable`라는 변수를 중첩된 스코프 안에서도 사용할 수 있다는 것을 확인할 수 있다.
 - 하지만 `console.log('nestedVariable in function : ', nestedVariable);` 부분에서 `nestedVariable` 변수는 `is not defined`라고 에러가 났는데, 변수가 선언된 함수 스코프 내부가 아닌 외부에서 해당 변수를 사용했기 때문이다.
-
 
 ## 스코프를 범위에서 변수 덮어쓰기
 ### 재할당 불가능한 변수 선언 let
@@ -148,3 +146,7 @@ outerVariable in outer scope 10
 ```
 - 위 코드에서 스코프 내에서 외부 스코프의 변수 `outerVariable`를 재선언을 했지만 에러를 발생시키지 않는다.
 - 스코프 내부에서 `innerVariable` 변수를 재선언 했지만 스코프 외부에서는 스코프 내부에서 재선언된 변수의 영향을 받지는 않는 것을 `console.log('outerVariable in outer scope', outerVariable);` 부분의 결과가 `outerVariable in outer scope 10`인 것을 통해서 알 수 있다. 스코프 내부에서는 값을 30으로 바꾸었지만, 여전히 값은 10으로 외부 스코프의 변수에 영향을 주지 않을 것을 알 수있다.
+- 스코프 내에서는 외부 스코프에서 이미 선언된 변수를 재선언 할 수 있다. 동일한 변수명으로 선언했기 때문에 외부 스코프의 변수에는 접근할 방법이 없어진다는 단점이 있다. 재선언된 스코프 내에서는 30으로 선언된 `outerVariable`는 10으로 선언된 외부 스코프의 `outerVariable`에 더 이상 접근할 수 없는 것이다.
+
+## 스코프의 원리
+- 자바스크립트에서는 현재 스코프에서 선언된 변수가 없으면 다음 상위 스코프의 변수가 있는지 찾고, 없으면 또 그 상위의 스코프에서 변수가 있는지를 찾는 방식으로 사용할 변수가 있는지 없는지를 탐색한다.
