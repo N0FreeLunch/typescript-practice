@@ -6,14 +6,14 @@
 var outerVariable = 10;
 const functionScope = function () {
   var innerVariable = 20;
-  console.log('innerVariable in function : ', innerVariable);
+  console.log('innerVariable in function', innerVariable);
 }
 functionScope();
 console.log('outerVariable', outerVariable);
 console.log('innerVariable out of function', innerVariable);
 ```
 - 위 코드를 브라우저 콘솔창에 넣어 보자.
-- `console.log('outerVariable', outerVariable);` 부분은 실행이 되는 것에 반해 `console.log('innerVariable out of function', innerVariable);`부분은 `Uncaught ReferenceError: innerVariable is not defined`라는 에러가 뜬다. 그에 반해 함수 내부에서 실행 된 `console.log('innerVariable in function : ', innerVariable);`은 정상적으로 실행이 된다.
+- `console.log('outerVariable', outerVariable)` 부분은 실행이 되는 것에 반해 `console.log('innerVariable out of function', innerVariable);`부분은 `Uncaught ReferenceError: innerVariable is not defined`라는 에러가 뜬다. 그에 반해 함수 내부에서 실행 된 `console.log('innerVariable in function', innerVariable);`은 정상적으로 실행이 된다.
 - `outerVariable`라는 변수는 `console.log('outerVariable', outerVariable);`코드가 실행될 때까지 변수가 살아있지만, `innerVariable`라는 변수는 함수 내에서는 실행이 되지만 함수 밖에서는 `console.log('innerVariable out of function', innerVariable);`코드가 실행될 때까지 살아있지 못한다.
 
 ### 변수의 생명주기
@@ -21,11 +21,11 @@ console.log('innerVariable out of function', innerVariable);
 ```js
 function () {
   var innerVariable = 20;
-  console.log('innerVariable in function : ', innerVariable);
+  console.log('innerVariable in function', innerVariable);
 }
 ```
 - 변수가 선언되고 존재할 수 있는 공간을 스코프라고 한다. `innerVariable` 변수는 함수의 범위를 벗어나는 순간 함수 밖에서는 이 변수가 존재하지 않으므로 불러 올 수 없다.
-- 함수는 `functionScope();`란 코드에 의해서 실행된다. 이 함수가 실행이 되면 위 코드가 실행이 되는 것이고 ` var innerVariable = 20;`로 변수 `innerVariable`가 선언이 되고, 이 변수에 담긴 값을 `console.log('innerVariable in function : ', innerVariable);`란 코드로 실행할 수 있다.
+- 함수는 `functionScope();`란 코드에 의해서 실행된다. 이 함수가 실행이 되면 위 코드가 실행이 되는 것이고 ` var innerVariable = 20;`로 변수 `innerVariable`가 선언이 되고, 이 변수에 담긴 값을 `console.log('innerVariable in function', innerVariable);`란 코드로 실행할 수 있다.
 - 하지만 이 함수 내의 코드의 실행이 끝나면 `innerVariable`라는 변수는 어디에서도 쓸 수 없는 상태가 된다.
 - `innerVariable`라는 변수가 살아있을 때는 `functionScope`라는 함수가 실행되고 이 함수의 실행이 끝날 때까지인 것이다. 
 - 변수가 존재한다. 변수가 살아 있다고 표현도 사용한다. 그래서 변수의 생명이 어디부터 시작해서 어디까지이다로 비유해서 표현하기도 하며 변수가 생성되고 소멸되는데 까지의 과정은 `functionScope()`함수를 실행할 때 마다 반복한다. 그래서 '생명주기'라고도 표현한다.
@@ -85,12 +85,12 @@ const functionScope = function () {
   var innerVariable = 20;
   const functionNestedScope = function () {
     var nestedVariable = 30;
-    console.log('innerVariable in nested function : ', innerVariable);
-    console.log('nestedVariable in nested function : ', nestedVariable);
+    console.log('innerVariable in nested function', innerVariable);
+    console.log('nestedVariable in nested function', nestedVariable);
   };
   functionNestedScope();
-  console.log('innerVariable in function : ', innerVariable);
-  console.log('nestedVariable in function : ', nestedVariable);
+  console.log('innerVariable in function', innerVariable);
+  console.log('nestedVariable in function', nestedVariable);
 };
 functionScope();
 console.log('outerVariable', outerVariable);
@@ -98,9 +98,9 @@ console.log('innerVariable out of function', innerVariable);
 ```
 - 위의 코드를 브라우저의 자바스크립트 콘솔창에서 실행해 보면 다음과 같은 결과가 나온다.
 ```
-innerVariable in nested function :  20
-nestedVariable in nested function :  30
-innerVariable in function :  20
+innerVariable in nested function 20
+nestedVariable in nested function 30
+innerVariable in function 20
 ```
 - 또한 다음과 같은 에러 메시지가 나온다.
 ```
@@ -108,8 +108,8 @@ Uncaught ReferenceError: nestedVariable is not defined
     at functionScope (<anonymous>:11:48)
 ```
 - 스코프 안에 스코프가 있는 것을 중첩된(nested) 스코프라고 부른다.
-- `innerVariable in nested function :  20`라는 것은 중첨된 스코프 안에서 외부 스코프에 있던 `innerVariable`라는 변수를 중첩된 스코프 안에서도 사용할 수 있다는 것을 확인할 수 있다.
-- 하지만 `console.log('nestedVariable in function : ', nestedVariable);` 부분에서 `nestedVariable` 변수는 `is not defined`라고 에러가 났는데, 변수가 선언된 함수 스코프 내부가 아닌 외부에서 해당 변수를 사용했기 때문이다.
+- `innerVariable in nested function 20`라는 것은 중첨된 스코프 안에서 외부 스코프에 있던 `innerVariable`라는 변수를 중첩된 스코프 안에서도 사용할 수 있다는 것을 확인할 수 있다.
+- 하지만 `console.log('nestedVariable in function', nestedVariable);` 부분에서 `nestedVariable` 변수는 `is not defined`라고 에러가 났는데, 변수가 선언된 함수 스코프 내부가 아닌 외부에서 해당 변수를 사용했기 때문이다.
 
 ## 스코프를 범위에서 변수 덮어쓰기
 ### 재할당 불가능한 변수 선언 let
@@ -147,6 +147,45 @@ outerVariable in outer scope 10
 - 위 코드에서 스코프 내에서 외부 스코프의 변수 `outerVariable`를 재선언을 했지만 에러를 발생시키지 않는다.
 - 스코프 내부에서 `innerVariable` 변수를 재선언 했지만 스코프 외부에서는 스코프 내부에서 재선언된 변수의 영향을 받지는 않는 것을 `console.log('outerVariable in outer scope', outerVariable);` 부분의 결과가 `outerVariable in outer scope 10`인 것을 통해서 알 수 있다. 스코프 내부에서는 값을 30으로 바꾸었지만, 여전히 값은 10으로 외부 스코프의 변수에 영향을 주지 않을 것을 알 수있다.
 - 스코프 내에서는 외부 스코프에서 이미 선언된 변수를 재선언 할 수 있다. 동일한 변수명으로 선언했기 때문에 외부 스코프의 변수에는 접근할 방법이 없어진다는 단점이 있다. 재선언된 스코프 내에서는 30으로 선언된 `outerVariable`는 10으로 선언된 외부 스코프의 `outerVariable`에 더 이상 접근할 수 없는 것이다.
+
+### 주의 사항
+- 위 코드를 let이 아닌 var를 사용하면 다른 동작을 하게 되고 결과값이 달라진다.
+- 그 이유는 let과 var의 스코프의 정의가 다르기 때문이다. let은 블록 범위 스코프이고, var는 함수 범위 스코프를 갖는다.
+```js
+var outerVariable = 10;
+if(true) {
+  var innerVariable = 20;
+  var outerVariable = 30;
+  console.log('outerVariable in inner scope', outerVariable);
+  console.log('innerVariable in inner scope', innerVariable);
+}
+console.log('outerVariable in outer scope', outerVariable);
+```
+```
+outerVariable in inner scope 30
+innerVariable in inner scope 20
+outerVariable in outer scope 30
+```
+- `outerVariable in outer scope`의 값이 let을 사용했을 때는 10이었는데, var를 사용했을 때는 30이 되었다.
+- `outerVariable`를 스코프 안에서 선언할 때 let의 소코프 범위는 블록 범위이지만 var의 스코프 범위는 함수 범위이므로 var를 감싸고 있는 함수 블록이 없기 때문에 var는 전역 스코프에서 다시 선언되었다.
+- `{}`밖의 `var outerVariable = 10;`도 전역 범위에서 변수가 선언되었고, `{}`안의 `var innerVariable = 20;`도 전역 범위에서 선언된 것이므로 두 스코프는 동일한 스코프에서 재선언 된 것이기 때문에 완전히 값이 덮어 쓰기가 된 것이다.
+```js
+var outerVariable = 10;
+const functionScope = function () {
+  var innerVariable = 20;
+  var outerVariable = 30;
+  console.log('innerVariable in function', innerVariable);
+  console.log('outerVariable in function', innerVariable);
+}
+functionScope();
+console.log('outerVariable out of function', outerVariable);
+```
+```
+innerVariable in function 20
+outerVariable in function 20
+outerVariable out of function 10
+```
+- `var outerVariable = 30;`와 같이 함수 블록에서 변수 재선언을 해 주면 함수 스코프를 벗어난 `console.log('outerVariable out of function', outerVariable);` 부분에서는 함수 내에서 재선언 된 코드의 영향을 받지 않는다는 것을 알 수 있다.
 
 ## 스코프의 원리
 - 자바스크립트에서는 현재 스코프에서 선언된 변수가 없으면 다음 상위 스코프의 변수가 있는지 찾고, 없으면 또 그 상위의 스코프에서 변수가 있는지를 찾는 방식으로 사용할 변수가 있는지 없는지를 탐색한다.
