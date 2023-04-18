@@ -56,3 +56,35 @@ index.html
 
 ### 모듈을 사용해야 하는 이유
 - 하나의 파일에 수 천줄 수 만줄의 코드를 짜는 것 보다 여러 파일에 코드를 나누어서 짜는 것이 코드를 기능대로 분류할 수 있고 관리하기 쉽기 때문에 좋으므로 코드를 나눌 수 있는 방법이 있다면 코드를 나누는 방식을 사용하는 것이 좋다.
+
+### 예시 코드
+- `codes` 폴더에서 `module.ts` 와 `main.ts` 파일을 만들고 다음 코드를 작성 해 보자.
+module.ts
+```ts
+const moduleVariable = 'module value';
+export default moduleVariable;
+```
+- `const` 키워드로 `moduleVariable` 변수를 선언한 뒤 이 변수를 다른 자바스크립트 파일에서 사용할 수 있도록 `export`를 사용해서 모듈 파일을 만들었다.
+- `export` 키워드는 여러 대상들을 다른 파일에서 불러다 쓸 수 있도록 하는데, 하나의 대상만을 내보내는 경우 `export default`란 키워드를 사용하며 여러개의 대상을 내 보내는 경우 불러다 쓸 때 각각 대상의 이름을 불러서 가져와야 하는데, `default`를 사용하면 어차피 하나의 대상만을 내 보내기 때문에 대상의 이름을 호출할 필요가 없다는 장점이 있다.
+
+main.ts
+```ts
+import importedModuleVariable from "./module";
+console.log(importedModuleVariable);
+```
+- `import` 키워드를 사용해서 모듈 파일을 `from` 키워드로 불러온다.
+- `module.ts` 모듈 파일에서 `default` 키워드로 대상을 내보냈기 때문에 하나의 대상을 내보낸 것이다. 하나의 대상을 내보났다면 불러오는 입장에서는 대상의 이름을 지정할 필요가 없다. 따라서 불러온 대상을 넣을 변수명을 만들고 대상을 넣어 주면 된다.
+- `import 불러온_값을_받을_변수명 from 모듈_파일의_경로` 문법을 사용해서 모듈 파일의 대상을 가져올 수 있다.
+- 이 때 모듈 파일에서 전달 된 값은 아무 변수명으로 값을 받아도 되는데 `importedModuleVariable`으로 하였다. 이 변수를 출력하는 `console.log()` 메소드를 사용하였다.
+- `main.ts` 파일에서는 `importedModuleVariable` 변수의 값을 정의하는 어떠한 코드도 없다. 하지만 모듈 파일의 코드를 불러 올 수 있기 때문에 `module.ts` 파일에서 입력한 값인 `'module value'`를 출력할 수 있게 된다.
+
+#### 자바스크립트 파일로 만들기
+```
+tsc codes/whyUseModule/main.ts
+```
+
+#### 자바스크립트 파일 실행하기
+```
+node codes/whyUseModule/main.js
+```
+- 위 코드를 터미널(CLI : 커멘드라인)에 입력하면 `module value`가 나오는 것을 확인할 수 있다.
